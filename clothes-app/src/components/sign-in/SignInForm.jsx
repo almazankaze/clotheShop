@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import FormInput from "../form-input/FormInput";
 import Button from "../button/Button";
 
@@ -25,15 +24,15 @@ const SignInForm = () => {
   };
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDoc(user);
+    await signInWithGooglePopup();
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const resp = await signInAuthUser(email, password);
+      await signInAuthUser(email, password);
+
       resetFormFields();
     } catch (err) {
       switch (err.code) {
