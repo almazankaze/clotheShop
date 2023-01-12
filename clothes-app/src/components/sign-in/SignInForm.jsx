@@ -4,7 +4,6 @@ import Button from "../button/Button";
 
 import {
   signInWithGooglePopup,
-  createUserDoc,
   signInAuthUser,
 } from "../../utils/firebase/Firebase";
 
