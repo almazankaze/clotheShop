@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import { UserProvider } from "./context/User";
-import { CategoriesProvider } from "./context/Categories";
-import { CartProvider } from "./context/Cart";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 import reportWebVitals from "./reportWebVitals";
 
 import "./index.scss";
@@ -12,15 +11,11 @@ import "./index.scss";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <UserProvider>
-        <CategoriesProvider>
-          <CartProvider>
-            <App />
-          </CartProvider>
-        </CategoriesProvider>
-      </UserProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 
