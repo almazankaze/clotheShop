@@ -1,8 +1,17 @@
-import { compose, applyMiddleware } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import { configureStore } from "@reduxjs/toolkit";
 //import logger from "redux-logger";
 
 import { rootReducer } from "./root-reducer";
+
+const persistConfig = {
+  key: "root",
+  storage,
+  blacklist: ["user"],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const loggerMiddleware = (store) => (next) => (action) => {
   if (!action.type) {
@@ -18,9 +27,13 @@ const loggerMiddleware = (store) => (next) => (action) => {
   console.log("next state: ", store.getState());
 };
 
-const middleWares = [loggerMiddleware];
+const middleWares = [
+  process.env.NODE_ENV !== "production" && loggerMiddleware,
+].filter(Boolean);
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: middleWares,
 });
+
+export const persistor = persistStore(store);
